@@ -1,0 +1,27 @@
+CREAREMOS UNA API REST DE PIZZERIA
+
+1. Conectamos a la base de datos mediante el archivo .properites
+2. Creamos nuestros paquetes: controller, service, persistence(entities,repository)
+3. Creamos nuestros controladores con Spring Data
+4. Hacemos las relaciones entre nuestras tablas (OneToOne,OneToMany,etc)
+
+5. Haremos uso de nuestro repository, recordemos que tenemos 3 tipos: CrudRepository,PagingAndSortingRepository y JpaRepository, estos son los que nos daran metodos comunes de consultas sql, lo que nos ayudara a ahorrarnos tiempo y codigo
+6. Con nuestro repository procederemos a crear en nuestro service los metodos cruds y los implementaremos en nuestro controller, estos son los metodos cruds basicos.
+7. Implementamos fetch lazy o eager en nuestras clases de relaciones.
+
+8. haremos nuestras propias consultas sql personalizadas, para esto hay diferentes formas de hacerlo
+8.1 Query methods: Permiten hacer consultar personalizadas sql usando nombre de clase, estas deben estar en nuestro repository
+Paging and sorting: este es otro tipo de Spring Data Repository(como el JpaRepository), y nos permite paginar nuestro repository
+
+8.2 @Query con JPQL: En lugar de hacer consultas con tablas y columnas,usaremos entities y sus atributos. En otras palabras haremos consultas basadas en clases entities. Ver el archivo "CustomerRepository".
+
+8.3 @Query con SQL nativos: Aqui si haremos una consulta como la hariamos en sql, y ademas podemos contar con todas las caracteristicas soportada por la base de datos. Recuerda, la consulta es tal cual como en sql y por tanto el nombre de las tablas deben ser como estan en sql. Lo unico diferente es que cierta parte al ser dinamica no la copiaremos sino que la pasaremos por parametros. Ver el archivo "PizzaOrderRepository".
+
+8.3.1 Usar @Modifying en un @Query: En nuestros @Query personalizada, siempre debemos de agregarle @Modifying si estamos haciendo un sql que modifique la tabla, por lo cual cuando hagamos un insert, delete o update deberemos usarla. Solo NO la usaremos cuando hagamos un select ya que no estamos modificando la tabla, solo llamando datos de esta. Ver "PizzaRepository".
+
+8.3.1 Usar @Transacional para asegurar la atomicidad: esta debe ir en el servicio que implementa el sql que escribimos en el repository. ver el "PizzaService".
+
+A continuacion se veran caracteristicas mas avanzadas
+Auditoria con Spring Data: nos permitira auditar las fechas de creacion y modificaion de una tabla. Ver clase "Pizza".
+
+Crear listener personalizado para auditoria: Decidi dejarlo hasta aca, porque senti que ya era algo mas avanzado para mi y algo inncesesario en mi caso, pues siento que primero debo comprender otras cosas como el spring security o el testing.
